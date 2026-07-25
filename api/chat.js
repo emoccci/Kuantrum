@@ -37,10 +37,10 @@ export default async function handler(req, res) {
       cevap: veri.choices[0].message.content
     });
 
-  } catch (hata) {
+  catch (hata) {
 
     res.status(500).json({
-      cevap: "Kuantrum bağlantıda hata yaşadı 🤖"
+      cevap: "Hata: " + hata.message
     });
 
   }
