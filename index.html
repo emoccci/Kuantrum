@@ -144,7 +144,7 @@ alan.scrollTop = alan.scrollHeight;
 
 // cevap sistemi
 
-function gonder(){
+async function gonder(){
 
 let kutu = document.getElementById("mesaj");
 
@@ -157,6 +157,19 @@ ekle("kullanici","Sen: " + mesaj);
 
 
 let cevap="";
+    let veri = await fetch("/api/chat", {
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body: JSON.stringify({
+        mesaj: mesaj
+    })
+});
+
+let sonuc = await veri.json();
+
+cevap = sonuc.cevap;
 
 
 
