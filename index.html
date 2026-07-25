@@ -62,7 +62,7 @@ let i = 0;
 document.getElementById("cevap").innerText = "";
 
 let zaman = setInterval(() => {
-    document.getElementById("cevap").innerText += yazi[i];
+    document.getElementById("cevap").innerText = yazi.substring(0, i);
     i++;
 
     if (i >= yazi.length) {
