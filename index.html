@@ -16,10 +16,16 @@
 
     <script>
         function gonder() {
-            let mesaj = document.getElementById("mesaj").value;
-            document.getElementById("cevap").innerText =
-                "Kuantrum: Şimdilik '" + mesaj + "' mesajını aldım.";
+    let mesaj = document.getElementById("mesaj").value;
+    let cevap = "";
+
+    if (mesaj.toLowerCase().includes("merhaba")) {
+        cevap = "Merhaba! Ben Kuantrum 🤖";
+    } else if (mesaj.toLowerCase().includes("nasılsın")) {
+        cevap = "İyiyim, teşekkürler!";
+    } else {
+        cevap = "Bunu anlamaya çalışıyorum: " + mesaj;
+    }
+
+    document.getElementById("cevap").innerText = "Kuantrum: " + cevap;
         }
-    </script>
-</body>
-</html>
