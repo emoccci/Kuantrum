@@ -11,23 +11,20 @@ export default async function handler(req, res) {
   try {
 
     const cevap = await fetch(
-      "https://api.openai.com/v1/chat/completions",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + process.env.GEMINI_API_KEY,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + process.env.OPENAI_API_KEY
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: [
+          contents: [
             {
-              role: "system",
-              content: "Sen Kuantrum adında Türkçe konuşan akıllı bir yapay zekasın."
-            },
-            {
-              role: "user",
-              content: mesaj
+              parts: [
+                {
+                  text: mesaj
+                }
+              ]
             }
           ]
         })
@@ -38,15 +35,15 @@ export default async function handler(req, res) {
     const veri = await cevap.json();
 
 
-    if (!veri.choices) {
+    if (!veri.candidates) {
       return res.status(500).json({
-        cevap: "OpenAI hatası: " + JSON.stringify(veri)
+        cevap: "Gemini hatası: " + JSON.stringify(veri)
       });
     }
 
 
     res.status(200).json({
-      cevap: veri.choices[0].message.content
+      cevap: veri.candidates[0].content.parts[0].text
     });
 
 
@@ -58,4 +55,4 @@ export default async function handler(req, res) {
 
   }
 
-}    
+}
