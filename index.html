@@ -34,7 +34,9 @@
     }
 
     document.getElementById("cevap").innerText = "Kuantrum: " + cevap;
-        }
+        let ses = new SpeechSynthesisUtterance("Kuantrum: " + cevap);
+ses.lang = "tr-TR";
+speechSynthesis.speak(ses);}
         
     </script>
 </body>
