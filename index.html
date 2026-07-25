@@ -20,11 +20,17 @@
     let cevap = "";
 
     if (mesaj.toLowerCase().includes("merhaba")) {
-        cevap = "Merhaba! Ben Kuantrum 🤖";
-    } else if (mesaj.toLowerCase().includes("nasılsın")) {
-        cevap = "İyiyim, teşekkürler!";
-    } else {
-        cevap = "Bunu anlamaya çalışıyorum: " + mesaj;
+    cevap = "Merhaba! Ben Kuantrum 🤖";
+} else if (mesaj.toLowerCase().includes("nasılsın")) {
+    cevap = "İyiyim, teşekkürler!";
+} else if (mesaj.toLowerCase().includes("adın ne")) {
+    cevap = "Benim adım Kuantrum 🤖";
+} else if (mesaj.toLowerCase().includes("ne yapabilirsin")) {
+    cevap = "Sorularını cevaplayabilir ve seninle sohbet edebilirim!";
+} else if (mesaj.toLowerCase().includes("kaç yaşındasın")) {
+    cevap = "Ben bir yapay zekayım, yaşım yok 😄";
+} else {
+    cevap = "Bunu henüz bilmiyorum ama öğrenmeye çalışıyorum: " + mesaj;
     }
 
     document.getElementById("cevap").innerText = "Kuantrum: " + cevap;
