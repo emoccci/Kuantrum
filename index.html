@@ -40,7 +40,13 @@ h1, p {
 
     <script>
         function gonder() {
+            let hafiza = localStorage.getItem("hafiza") || "";
     let mesaj = document.getElementById("mesaj").value;
+            if (mesaj.toLowerCase().includes("benim adım")) {
+    hafiza = mesaj;
+    localStorage.setItem("hafiza", hafiza);
+    cevap = "Tamam, bunu hatırlayacağım 🤖";
+            }
     let cevap = "";
 
     if (mesaj.toLowerCase().includes("merhaba")) {
