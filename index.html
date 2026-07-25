@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kuantrum V3</title>
+<title>Kuantrum V4</title>
 
 <style>
 
-body {
+body{
     margin:0;
     background:#111827;
     color:white;
@@ -16,23 +16,22 @@ body {
     text-align:center;
 }
 
-h1 {
+h1{
     margin-top:20px;
 }
 
-#robot {
+#robot{
     font-size:70px;
-    animation: hareket 1s infinite;
+    animation:hareket 1s infinite;
 }
 
-@keyframes hareket {
-    0% {transform:translateY(0);}
-    50% {transform:translateY(-15px);}
-    100% {transform:translateY(0);}
+@keyframes hareket{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+    100%{transform:translateY(0);}
 }
 
-
-#sohbet {
+#sohbet{
     width:90%;
     max-width:500px;
     height:350px;
@@ -43,52 +42,34 @@ h1 {
     padding:10px;
 }
 
-
-.mesaj {
+.mesaj{
     padding:10px;
     margin:8px;
     border-radius:10px;
 }
 
-
-.kullanici {
+.kullanici{
     background:#2563eb;
     text-align:right;
 }
 
-
-.kuantrum {
+.kuantrum{
     background:#374151;
     text-align:left;
 }
 
-
-input {
-    padding:12px;
+input{
     width:60%;
+    padding:12px;
     border-radius:10px;
     border:none;
 }
 
-
-button {
+button{
     padding:12px;
     border-radius:10px;
-    border:none;
-    cursor:pointer;
     margin:5px;
 }
-
-
-button:hover {
-    transform:scale(1.05);
-}
-
-
-#ayarlar {
-    margin-top:20px;
-}
-
 
 </style>
 
@@ -96,205 +77,90 @@ button:hover {
 
 <body>
 
-<h1>🤖 KUANTRUM V3</h1>
+<h1>🤖 KUANTRUM V4</h1>
 
 <div id="robot">🤖</div>
 
 <div id="sohbet"></div>
 
-
-<input id="mesaj" placeholder="Kuantrum'a yaz...">
+<input id="mesaj" placeholder="Kuantrum'a yaz">
 
 <button onclick="gonder()">Gönder</button>
-
-
-<div id="ayarlar">
-
-<button onclick="temizle()">🗑️ Temizle</button>
-
-<button onclick="sesDegistir()">🔊 Ses Aç/Kapat</button>
-
-<button onclick="tema()">🎨 Tema</button>
-
-</div>
 <script>
 
 let sesAcik = true;
 
 
-// mesaj ekleme
-
-function ekle(kim, yazi){
+function ekle(kim,yazi){
 
 let alan = document.getElementById("sohbet");
 
 let mesaj = document.createElement("div");
 
-mesaj.className = "mesaj " + kim;
+mesaj.className="mesaj "+kim;
 
-mesaj.innerText = yazi;
+mesaj.innerText=yazi;
 
 alan.appendChild(mesaj);
 
-alan.scrollTop = alan.scrollHeight;
+alan.scrollTop=alan.scrollHeight;
 
 }
 
 
 
-// cevap sistemi
-
 async function gonder(){
 
-let kutu = document.getElementById("mesaj");
+let kutu=document.getElementById("mesaj");
 
-let mesaj = kutu.value.toLowerCase();
+let mesaj=kutu.value;
 
 if(mesaj=="") return;
 
 
-ekle("kullanici","Sen: " + mesaj);
+ekle("kullanici","Sen: "+mesaj);
 
 
 let cevap="";
-    let veri = await fetch("/api/chat", {
-    method:"POST",
-    headers:{
-        "Content-Type":"application/json"
-    },
-    body: JSON.stringify({
-        mesaj: mesaj
-    })
+
+
+try{
+
+let veri=await fetch("/api/chat",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+mesaj:mesaj
+
+})
+
 });
 
-let sonuc = await veri.json();
 
-cevap = sonuc.cevap;
+let sonuc=await veri.json();
 
+cevap=sonuc.cevap;
 
-
-// hafıza
-
-if(mesaj.includes("benim adım ne")){
-
-let isim=localStorage.getItem("isim");
-
-if(isim){
-
-cevap="Senin adın "+isim+" 🤖";
-
-}else{
-
-cevap="Henüz adını bilmiyorum.";
 
 }
 
-}
+catch{
 
-
-else if(mesaj.includes("benim adım")){
-
-let isim=mesaj.replace("benim adım","").trim();
-
-localStorage.setItem("isim",isim);
-
-cevap="Tamam "+isim+", seni hatırlayacağım 🤖";
+cevap="Bağlantı hatası oldu 🤖";
 
 }
 
 
 
-// sohbet
+if(!cevap){
 
-else if(mesaj.includes("merhaba")){
-
-cevap="Merhaba! Ben Kuantrum 🤖";
-
-}
-
-
-else if(mesaj.includes("nasılsın")){
-
-cevap="İyiyim 😎 Sen nasılsın?";
-
-}
-
-
-else if(mesaj.includes("adın ne")){
-
-cevap="Benim adım Kuantrum 🤖";
-
-}
-
-
-else if(mesaj.includes("ne yapabilirsin")){
-
-cevap="Sohbet edebilirim, hafızamı kullanabilirim ve eğlenceli komutlar çalıştırabilirim.";
-
-}
-
-
-
-// eğlence
-
-else if(mesaj.includes("şaka")){
-
-cevap="Bilgisayar neden denize girdi? Çünkü internete bağlanmak istedi 😂";
-
-}
-
-
-else if(mesaj.includes("zar")){
-
-cevap="Zar sonucu: "+(Math.floor(Math.random()*6)+1);
-
-}
-
-
-else if(mesaj.includes("yazı tura")){
-
-cevap=Math.random()<0.5 ? "Yazı 🪙":"Tura 🪙";
-
-}
-
-
-else if(mesaj.includes("saat")){
-
-cevap="Saat: "+new Date().toLocaleTimeString("tr-TR");
-
-}
-
-
-else if(mesaj.includes("tarih")){
-
-cevap="Tarih: "+new Date().toLocaleDateString("tr-TR");
-
-}
-
-
-else if(mesaj.includes("komutlar")){
-
-cevap="Komutlar: şaka, zar, yazı tura, saat, tarih, tema değiştir";
-
-}
-
-
-
-// tema
-
-else if(mesaj.includes("tema değiştir")){
-
-document.body.style.background="#312e81";
-
-cevap="Tema değişti 🎨";
-
-}
-
-
-
-else{
-
-cevap="Bunu henüz bilmiyorum ama öğreniyorum 🤖";
+cevap="Şu an cevap veremiyorum 🤖";
 
 }
 
@@ -303,10 +169,6 @@ cevap="Bunu henüz bilmiyorum ama öğreniyorum 🤖";
 ekle("kuantrum","Kuantrum: "+cevap);
 
 
-
-
-
-// ses
 
 if(sesAcik){
 
@@ -319,44 +181,12 @@ speechSynthesis.speak(ses);
 }
 
 
+
 kutu.value="";
 
 
 }
+    </script>
 
-
-
-// temizleme
-
-function temizle(){
-
-document.getElementById("sohbet").innerHTML="";
-
-}
-
-
-
-// ses aç kapa
-
-function sesDegistir(){
-
-sesAcik=!sesAcik;
-
-alert("Ses: "+(sesAcik?"Açık":"Kapalı"));
-
-}
-
-
-
-// tema
-
-function tema(){
-
-document.body.style.background="#064e3b";
-
-}
-
-
-</script>
 </body>
 </html>
