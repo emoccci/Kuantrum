@@ -33,7 +33,18 @@
     cevap = "Bunu henüz bilmiyorum ama öğrenmeye çalışıyorum: " + mesaj;
     }
 
-    document.getElementById("cevap").innerText = "Kuantrum: " + cevap;
+    let yazi = "Kuantrum: " + cevap;
+let i = 0;
+document.getElementById("cevap").innerText = "";
+
+let zaman = setInterval(() => {
+    document.getElementById("cevap").innerText += yazi[i];
+    i++;
+
+    if (i >= yazi.length) {
+        clearInterval(zaman);
+    }
+}, 50);
         let ses = new SpeechSynthesisUtterance("Kuantrum: " + cevap);
 ses.lang = "tr-TR";
 speechSynthesis.speak(ses);}
