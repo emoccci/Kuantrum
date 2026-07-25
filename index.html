@@ -50,12 +50,10 @@ if (mesaj.toLowerCase().includes("benim adım")) {
     cevap = "Tamam, bunu hatırlayacağım 🤖";
 }
 
-    if (cevap === "") {
-        if (mesaj.toLowerCase().includes("benim adım ne")) {
+    if (mesaj.toLowerCase().includes("benim adım ne")) {
     let kayit = localStorage.getItem("hafiza");
     cevap = "Senin adın: " + kayit;
-        }
-    if (mesaj.toLowerCase().includes("merhaba")) {
+} else if (mesaj.toLowerCase().includes("merhaba")) {
         cevap = "Merhaba! Ben Kuantrum 🤖";
     } else if (mesaj.toLowerCase().includes("nasılsın")) {
         cevap = "İyiyim, teşekkürler!";
