@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuantrum</title>
+</head>
+<body style="background:#111827;color:white;text-align:center;font-family:Arial;">
+    <h1>🤖 KUANTRUM</h1>
+    <p>Hoş geldin! Bu Kuantrum'un ilk web sayfası.</p>
+
+    <input id="mesaj" placeholder="Mesajını yaz">
+    <button onclick="gonder()">Gönder</button>
+
+    <p id="cevap"></p>
+
+    <script>
+        function gonder() {
+            let mesaj = document.getElementById("mesaj").value;
+            document.getElementById("cevap").innerText =
+                "Kuantrum: Şimdilik '" + mesaj + "' mesajını aldım.";
+        }
+    </script>
+</body>
+</html>
